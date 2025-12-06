@@ -1,24 +1,53 @@
-# README
+# Shift Manager App
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+Shift scheduling application created as a portfolio project.
 
-Things you may want to cover:
+## Overview
+A simple application to manage shift registration and scheduling.
 
-* Ruby version
+## Tech Stack
+- Ruby 3.2.2
+- Rails 7.x
+- SQLite3
+- JavaScript (Stimulus planned)
+- Node.js / Yarn
 
-* System dependencies
+## Features (planned)
+- User registration (optional)
+- Shift creation
+- Shift editing
+- Shift list
+- Calendar display (planned)
+- Validation
+- Responsive layout
 
-* Configuration
+## Setup
 
-* Database creation
+```bash
+git clone <your-repo-url>
+cd shift-manager-app
+bundle install
+yarn install
+rails db:create db:migrate
+bin/dev
+erDiagram
+  USER {
+    integer id
+    string  name
+    string  email
+    datetime created_at
+    datetime updated_at
+  }
 
-* Database initialization
+  SHIFT {
+    integer id
+    integer user_id
+    date    work_date
+    time    start_time
+    time    end_time
+    text    memo
+    datetime created_at
+    datetime updated_at
+  }
 
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+  USER ||--o{ SHIFT : has
