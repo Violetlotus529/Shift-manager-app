@@ -1,0 +1,32 @@
+.calendar-container {
+  max-width: 1100px;
+  margin: 40px auto;
+}
+
+.calendar-header {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 16px;
+}
+
+.calendar {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.calendar th,
+.calendar td {
+  border: 1px solid #ddd;
+  vertical-align: top;
+  height: 120px;
+}
+
+.calendar-day-number {
+  font-size: 12px;
+  padding: 4px 6px;
+}
+
+.calendar .is-other-month {
+  background-color: #f5f5f5;
+  color: #999;
+}
