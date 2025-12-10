@@ -1,2 +1,56 @@
-<h1>Shifts#index</h1>
-<p>Find me in app/views/shifts/index.html.erb</p>
+<h1>シフト一覧</h1>
+
+<% base = @base_date %>
+<% month_start = @base_date.beginning_of_month %>
+<% month_end   = @base_date.end_of_month %>
+
+<% # カレンダーを　六週分に固定（静的） %>
+<% calendar_start = month_start.beginning_of_week(:sunday) %>
+<% calendar_end = month_end.end_of_week(:sunday) %>
+
+<div class="calendar-container">
+  <div class="calendar-header">
+    <h2><%= base.strftime('%Y年%m月') %></h2>
+  </div>
+
+  <table class="calendar">
+    <thead>
+      <tr>
+        <th>日</th>
+        <th>月</th>
+        <th>火</th>
+        <th>水</th>
+        <th>木</th>
+        <th>金</th>
+        <th>土</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% 6.times do |week| %>
+        <tr>
+          <% 7.times do |wday| %>
+            <% day = calendar_start + (week * 7 + wday).days%>
+            <% in_current_month = (day.month == base.month) %>
+            <td class="calendar-cell <%= 'is-other-month' unless in_current_month %>">
+              <div class="calendar-day-number">
+                <%= day.day %>
+              </div>
+
+                <div class="calendar-day-body">
+                  <!-- あとでここにその日のシフトを表示していく -->
+                  <!-- 今は静的レイアウトだけ -->
+                </div>
+            </td>
+          <% end %>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+
+  <div class="calendar-actions">
+    <%= link_to 'シフト登録', new_shift_path, class: "btn btn-primary" %>
+  </div>
+</div>
+
+            
+
