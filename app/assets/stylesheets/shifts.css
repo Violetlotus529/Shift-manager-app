@@ -168,18 +168,10 @@
   color: #333;
 }
 
-.error-messages {
-  background: #ffecec;
-  border-left: 4px solid #e74c3c;
-  padding: 12px;
-  border-radius: 4px;
-}
-
-.error-messages p {
-  margin-bottom: 6px;
-  font-weight: bold;
-}
-
-.error-messages ul {
-  padding-left: 20px;
+.calendar-shifts {
+  margin: 4px 6px 0;
+  padding-left: 0;
+  list-style: none;
+  font-size: 0.8rem;
+  line-height: 1.3;
 }

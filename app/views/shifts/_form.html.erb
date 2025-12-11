@@ -1,16 +1,5 @@
 <div class="shift-form-container">
   <%= form_with model: shift, local: true do |f| %>
-    <% if shift.errors.any? %>
-      <div class="error-messages">
-        <p><%= pluralize(shift.errors.count, "error") %> prohibited this shift form being saved:</p>
-        <ul>
-          <% shift.errors.full_messages.each do |msg| %>
-            <li><%= msg %></li>
-          <% end %>
-        </ul>
-      </div>
-    <% end %>
-
     <div class="form-group">
       <%= f.label :work_date, "勤務日" %>
       <%= f.date_field :work_date, class: "form-input", required: true %>

@@ -10,7 +10,9 @@
 
 <div class="calendar-container">
   <div class="calendar-header">
-    <h2><%= base.strftime('%Y年%m月') %></h2>
+    <%= link_to "<", shifts_path(month: @base_date.prev_month.strftime("%Y-%m")) %>
+    <h2><%= @base_date.strftime('%Y年%m月') %></h2>
+    <%= link_to ">", shifts_path(month: @base_date.next_month.strftime("%Y-%m")) %>
   </div>
 
   <table class="calendar">
@@ -30,18 +32,27 @@
         <tr>
           <% 7.times do |wday| %>
             <% day = calendar_start + (week * 7 + wday).days%>
-            <% in_current_month = (day.month == base.month) %>
-            <td class="calendar-cell <%= 'is-other-month' unless in_current_month %>">
+            <% shifts = @shifts_by_date[day] || [] %>
+
+            <td class="<%= 'is-other-month' if day.month != @base_date.month %>">
               <div class="calendar-day-number">
-                <%= day.day %>
+                <%= link_to day.strftime("%Y-%m-%d"), new_shift_path(work_date: day) %>
               </div>
 
-                <div class="calendar-day-body">
-                  <!-- あとでここにその日のシフトを表示していく -->
-                  <!-- 今は静的レイアウトだけ -->
-                </div>
+                <% if shifts.any? %>
+                  <ul class="calendar-shifts">
+                    <% shifts.each do |shift| %>
+                      <li class="calendar-shift-item">
+                        <%= link_to shift_path(shift) do %>
+                          <%= shift.start_time&.strftime("%H:%M") %>~
+                          <%= shift.end_time&.strftime("%H:%M") %>
+                        <% end %>
+                      </li>
+                    <% end %>
+                  </ul>
+                <% end %>
             </td>
-          <% end %>
+            <% end %>
         </tr>
       <% end %>
     </tbody>

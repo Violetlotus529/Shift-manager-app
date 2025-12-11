@@ -1,24 +1,22 @@
 class ShiftsController < ApplicationController
+  before_action :set_shift, only: %i[show edit update destroy]
+
   def index
-    @base_date =
-      if params[:base_date].present?
-        Date.parse(params[:month]) rescue Date.current
-      else
-        Date.current
-      end
+    @base_date = params[:month] ? Date.parse(params[:month]) : Date.current
+    month_start = @base_date.beginning_of_month
+    month_end   = @base_date.end_of_month
+    
+    @calendar_start = month_start.beginning_of_week(:sunday)
+    @calendar_end = @calendar_start + 6.weeks - 1.day
 
-    @shifts = Shift.all
+    @shifts_by_date = Shift.where(work_date: @calendar_start..@calendar_end)
+                            .group_by(&:work_date)
   end
 
-  def show
-    @shift = Shift.find(params[:id])
-  end
+  def show; end
 
   def new
-    @shift = Shift.new
-    if params[:date].present?
-      @shift.work_date = Date.parse(params[:date]) rescue nil
-    end
+    @shift = Shift.new(work_date: params[:work_date])
   end
 
   def create
@@ -30,9 +28,7 @@ class ShiftsController < ApplicationController
     end
   end
 
-  def edit
-    @shift = Shift.find(params[:id])
-  end
+  def edit; end
 
   def update
     @shift = Shift.find(params[:id])
