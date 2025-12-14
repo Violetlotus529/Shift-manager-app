@@ -1,5 +1,9 @@
 <h1>シフト一覧</h1>
 
+<% if flash[:alert].present? %>
+  <div class="flash-alert"><%= flash[:alert] %></div>
+<% end %>
+
 <% base = @base_date %>
 <% month_start = @base_date.beginning_of_month %>
 <% month_end   = @base_date.end_of_month %>
@@ -10,9 +14,18 @@
 
 <div class="calendar-container">
   <div class="calendar-header">
-    <%= link_to "<", shifts_path(month: @base_date.prev_month.strftime("%Y-%m")) %>
-    <h2><%= @base_date.strftime('%Y年%m月') %></h2>
-    <%= link_to ">", shifts_path(month: @base_date.next_month.strftime("%Y-%m")) %>
+    <div class="calendar-left">
+      <%= link_to "＜".html_safe, shifts_path(month: @base_date.prev_month.strftime("%Y-%m")), class: "calendar-nav-button" %>
+      <%= link_to "＞".html_safe, shifts_path(month: @base_date.next_month.strftime("%Y-%m")), class: "calendar-nav-button" %>
+    </div>
+
+    <div class="calendar-center">
+      <h2><%= @base_date.strftime('%Y年%m月') %></h2>
+    </div>
+
+    <div class="calendar-right">
+      <%= link_to 'シフト登録', new_shift_path, class: "btn btn-primary" %>
+    </div>
   </div>
 
   <table class="calendar">
@@ -33,18 +46,27 @@
           <% 7.times do |wday| %>
             <% day = calendar_start + (week * 7 + wday).days%>
             <% shifts = @shifts_by_date[day] || [] %>
+            <% is_holiday = Shift::WEEKLY_HOLIDAYS.include?(day.wday) %>
 
-            <td class="<%= 'is-other-month' if day.month != @base_date.month %>">
+            <td class="<%= ['is-other-month', ('holiday' if is_holiday)].compact.join(' ') %>">
               <div class="calendar-day-number">
-                <%= link_to day.strftime("%Y-%m-%d"), new_shift_path(work_date: day) %>
+                <% if is_holiday %>
+                  <span class="calendar-day-label"><%= day.day %></span>
+                <% else %>
+                  <%= link_to day.day, new_shift_path(work_date: day), class: "calendar-day-link" %>
+                <% end %>
               </div>
+                
+                <% if is_holiday %>
+                  <div class="calendar-day-note">定休日</div>
+                <% end %>
 
                 <% if shifts.any? %>
                   <ul class="calendar-shifts">
                     <% shifts.each do |shift| %>
                       <li class="calendar-shift-item">
-                        <%= link_to shift_path(shift) do %>
-                          <%= shift.start_time&.strftime("%H:%M") %>~
+                        <%= link_to shift_path(shift), class: "calendar-shift-link" do %>
+                          <%= shift.start_time&.strftime("%H:%M") %>〜
                           <%= shift.end_time&.strftime("%H:%M") %>
                         <% end %>
                       </li>
@@ -57,11 +79,5 @@
       <% end %>
     </tbody>
   </table>
-
-  <div class="calendar-actions">
-    <%= link_to 'シフト登録', new_shift_path, class: "btn btn-primary" %>
-  </div>
-</div>
-
             
 

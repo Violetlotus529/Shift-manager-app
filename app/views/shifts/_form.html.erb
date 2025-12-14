@@ -1,4 +1,12 @@
 <div class="shift-form-container">
+  <% if @shift.errors.any? %>
+    <div class="form-errors">
+      <% @shift.errors.full_messages.each do |msg| %>
+        <p><%= msg %></p>
+      <% end %>
+    </div>
+  <% end %>
+
   <%= form_with model: shift, local: true do |f| %>
     <div class="form-group">
       <%= f.label :work_date, "勤務日" %>

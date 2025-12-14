@@ -1,0 +1,1 @@
+WEEKLY_HOLIDAYS = [1]

@@ -2,7 +2,11 @@ class ShiftsController < ApplicationController
   before_action :set_shift, only: %i[show edit update destroy]
 
   def index
-    @base_date = params[:month] ? Date.parse(params[:month]) : Date.current
+    @base_date = if params[:month].present?
+                    Date.strptime(params[:month], "%Y-%m")
+                 else
+                    Date.current
+                 end
     month_start = @base_date.beginning_of_month
     month_end   = @base_date.end_of_month
     
@@ -16,7 +20,19 @@ class ShiftsController < ApplicationController
   def show; end
 
   def new
-    @shift = Shift.new(work_date: params[:work_date])
+    if params[:work_date].present?
+      work_date = Date.parse(params[:work_date])
+
+      if Shift::WEEKLY_HOLIDAYS.include?(work_date.wday)
+        redirect_to shifts_path(month: work_date.strftime("%Y-%m")),
+                    alert: "定休日にはシフト登録できません"
+        return
+      end
+
+      @shift = Shift.new(work_date: work_date)
+    else
+      @shift = Shift.new
+    end
   end
 
   def create
