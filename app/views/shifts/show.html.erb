@@ -1,40 +1,45 @@
-<div class="shift-show">
-  <div class="shift-show-header">
-    <h1 class="shift-show-title">
-      <%= @shift.work_date.strftime("%Y-%m-%d") %> のシフト
-    </h1>
-
-    <%= link_to "一覧に戻る", shifts_path, class: "btn btn-secondary" %>
+<div class="shift-show-container">
+  <div class="back-link">
+    <%= link_to "<< 一覧に戻る", shifts_path, class: "btn btn-secondary" %>
   </div>
 
-  <div class="shift-show-main">
-    <dl class="shift-show-meta">
-      <div>
-        <dt>勤務日</dt>
-        <dd><%= @shift.work_date.strftime("%Y-%m-%d") %></dd>
-      </div>
-      <div>
-        <dt>勤務開始</dt>
-        <dd><%= @shift.start_time&.strftime("%H:%M") %></dd>
-      </div>
-      <div>
-        <dt>勤務終了</dt>
-        <dd><%= @shift.end_time&.strftime("%H:%M") %></dd>
-      </div>
-    </dl>
-
-    <div class="shift-show-memo">
-      <h2 class="shift-show-memo-title">メモ</h2>
-      <p>
-        <%= @shift.memo.presence || "メモは登録されていません" %>
-      </p>
+  <div class="shift-show">
+    <div class="shift-show-header">
+      <h1 class="shift-show-title">
+        <%= @shift.work_date.strftime("%Y-%m-%d") %> のシフト
+      </h1>
+ 
     </div>
-  </div>
 
-  <div class="shift-show-actions">
-    <%= link_to "削除", shift_path(@shift),
-                data: {turbo_method: :delete, turbo_confirm: "本当に削除しますか？" },
-                class: "btn btn-danger" %>
-    <%= link_to "編集", edit_shift_path(@shift), class: "btn btn-primary" %>
+    <div class="shift-show-main">
+      <dl class="shift-show-meta">
+        <div>
+          <dt>勤務日</dt>
+          <dd><%= @shift.work_date.strftime("%Y-%m-%d") %></dd>
+        </div>
+        <div>
+          <dt>勤務開始</dt>
+          <dd><%= @shift.start_time&.strftime("%H:%M") %></dd>
+        </div>
+        <div>
+          <dt>勤務終了</dt>
+          <dd><%= @shift.end_time&.strftime("%H:%M") %></dd>
+        </div>
+      </dl>
+
+      <div class="shift-show-memo">
+        <h2 class="shift-show-memo-title">メモ</h2>
+        <p>
+          <%= @shift.memo.presence || "メモは登録されていません" %>
+        </p>
+      </div>
+    </div>
+
+    <div class="shift-show-actions">
+      <%= link_to "編集", edit_shift_path(@shift), class: "btn btn-primary" %>
+      <%= link_to "削除", shift_path(@shift),
+                  data: {turbo_method: :delete, turbo_confirm: "本当に削除しますか？" },
+                  class: "btn btn-danger" %>
+    </div>
   </div>
 </div>
