@@ -545,3 +545,17 @@ body {
     background: transparent;
   }
 }
+
+@media (max-width: 480px) {
+  .calendar-shift-link {
+    font-size: 0;
+  }
+
+  .calendar-shift-link::after {
+    content: "●";
+    font-size: 10px;
+    color: #3b82f6;
+    display: block;
+    text-align: center;
+  }
+}
