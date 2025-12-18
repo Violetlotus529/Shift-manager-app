@@ -34,13 +34,15 @@ rails db:create db:migrate
 rails s
 ```
 
-##　SETUP
+## Detailed Setup
+```bash
 git clone <your-repo-url>
 cd shift-manager-app
 bundle install
 yarn install
 rails db:create db:migrate
 bin/dev
+```
 
 erDiagram
   SHIFT {
