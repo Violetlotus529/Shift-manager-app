@@ -33,8 +33,6 @@ bundle install
 rails db:create db:migrate
 rails s
 
-## SETUP
-```bash
 git clone <your-repo-url>
 cd shift-manager-app
 bundle install
