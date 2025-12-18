@@ -32,7 +32,9 @@ https://shift-manager-app-edah.onrender.com
 bundle install
 rails db:create db:migrate
 rails s
+```bash
 
+##SETUP
 git clone <your-repo-url>
 cd shift-manager-app
 bundle install
