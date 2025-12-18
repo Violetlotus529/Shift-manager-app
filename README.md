@@ -43,7 +43,7 @@ yarn install
 rails db:create db:migrate
 bin/dev
 ```
-
+```mermaid
 erDiagram
   SHIFT {
     integer id
