@@ -10,6 +10,16 @@ deployment, and responsive UI handling.
 ## Live Demo
 https://shift-manager-app-edah.onrender.com
 
+## Highlights
+- Implemented calendar-based shift management using Rails views and helpers
+- Added client-side and server-side validation for holidays and unavailable dates
+- Designed responsive UI with mobile-first adjustments and dark mode support
+
+## Technical Challenges
+- Handling holiday logic consistently between model and view
+- Resolving CSS layout issues across breakpoints
+- Configuring production deployment with PostgreSQL on Render
+
 ## Features
 - Monthly calendar view of shifts
 - Shift registration and detail display
